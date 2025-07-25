@@ -19,7 +19,7 @@ This project includes two versions of a fullscreen, customizable timer:
   - Date selector
   - Clock size adjustment
   - Dark/Light mode toggle
-  - Color pickers for text, counter, and heading
+  - Color pickers  
   - Custom font support (via input field)
 - Responsive design.
 
