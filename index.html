@@ -3,26 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Pulse of Time</title>
+  <title>Project Menu</title>
   <style>
-    /* Background gradient */
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       background: linear-gradient(135deg, #667eea, #764ba2);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      padding: 1rem;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
     }
 
     .container {
       text-align: center;
+      max-width: 90vw;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: clamp(1.5rem, 5vw, 3rem);
       margin-bottom: 2rem;
       text-shadow: 0 2px 5px rgba(0,0,0,0.4);
     }
@@ -30,8 +38,8 @@
     .btn {
       display: inline-block;
       margin: 1rem;
-      padding: 1.5rem 3rem;
-      font-size: 1.5rem;
+      padding: clamp(0.75rem, 2vw, 1.5rem) clamp(1.5rem, 4vw, 3rem);
+      font-size: clamp(1rem, 3vw, 1.5rem);
       font-weight: bold;
       color: white;
       text-decoration: none;
@@ -43,6 +51,7 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       transition: background 0.3s ease, transform 0.3s ease;
       user-select: none;
+      min-width: 120px;
     }
 
     .btn:hover {
@@ -53,91 +62,83 @@
     .btn:active {
       transform: scale(0.95);
     }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>The Pulse of Time: Tracked & Ticking</h1>
-    <a href="2.html" class="btn">Time Passed</a>
-    <a href="1.html" class="btn">Time Left</a>
-  </div>
- <div class="footer-credit">developed by Tamim</div>
 
-  <style>
+    .faq-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      font-size: 1rem;
+      text-align: left;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-weight: bold;
+    }
+
+    .faq-question:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-answer {
+      display: none;
+      color: #ccc;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      padding: 10px 12px 5px;
+      line-height: 1.5;
+    }
+
+    .faq-container.open .faq-answer {
+      display: block;
+    }
+
     .footer-credit {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
+      text-align: right;
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.6);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       user-select: none;
       pointer-events: none;
-      z-index: 1000;
+      padding: 10px 10px 0;
     }
   </style>
-<!-- FAQ Dropdown fixed at bottom -->
-<div class="faq-container">
-  <button class="faq-question">▶ Can I customize the countdown or timer?</button>
-  <div class="faq-answer">
-    Yes! You can edit the date, time, font, theme color, and clock size directly inside the Page. It's fully flexible and easy to tweak. Just press the Settings icon in the top right corner of the page.  
+</head>
+<body>
+  <div class="main-content">
+    <div class="container">
+      <h1>The Pulse of Time: Tracked &amp; Ticking</h1>
+      <a href="2.html" class="btn">Time Passed</a>
+      <a href="1.html" class="btn">Time Left</a>
+    </div>
   </div>
-</div>
 
-<style>
-  .faq-container {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    z-index: 1000;
-  }
+  <div class="faq-container">
+    <button class="faq-question">▶ Can I customize the countdown or timer?</button>
+    <div class="faq-answer">
+      Yes! You can edit the date, time, font, theme color, and clock size directly inside the Page. It's fully flexible and easy to tweak. Just press the Settings icon in the top right corner of the page.  
+    </div>
+  </div>
 
-  .faq-question {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.06);
-    color: #ffffff;
-    font-size: 1rem;
-    text-align: left;
-    padding: 12px 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-    font-weight: bold;
-  }
+  <div class="footer-credit">developed by Tamim</div>
 
-  .faq-question:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .faq-answer {
-    display: none;
-    color: #ccc;
-    font-size: 0.9rem;
-    margin-top: 10px;
-    padding: 10px 12px 5px;
-    line-height: 1.5;
-  }
-
-  .faq-container.open .faq-answer {
-    display: block;
-  }
-</style>
-
-<script>
-  document.querySelectorAll('.faq-question').forEach(button => {
-    button.addEventListener('click', () => {
-      button.parentElement.classList.toggle('open');
+  <script>
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        button.parentElement.classList.toggle('open');
+      });
     });
-  });
-</script>
+  </script>
 </body>
-
 </html>
