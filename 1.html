@@ -1,121 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Countdown Timer</title>
-<style>
-  :root {
-    --text-color: #00ffcc;
-    --counter-color: #00ff99;
-    --bg-color: #111;
-    --glass-blur: blur(15px);
-    --font-family: 'Orbitron', sans-serif;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Countdown Timer</title>
+  <style>
+    :root {
+      --text-color: #00ffcc;
+      --counter-color: #00ff99;
+      --bg-color: #111;
+      --glass-blur: blur(15px);
+      --font-family: 'Orbitron', sans-serif;
+    }
 
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    font-family: var(--font-family);
-    background: var(--bg-color);
-    color: var(--text-color);
-    transition: background 0.4s, color 0.4s;
-    overflow: hidden;
-  }
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: var(--font-family);
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.4s, color 0.4s;
+      overflow: hidden;
+    }
 
-  #app {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    backdrop-filter: var(--glass-blur);
-    background: rgba(0, 0, 0, 0.6);
-    padding: 30px;
-    box-sizing: border-box;
-    text-align: center;
-  }
+    #app {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      backdrop-filter: var(--glass-blur);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      box-sizing: border-box;
+      text-align: center;
+    }
 
-  #label {
-    font-weight: 500;
-    color: var(--text-color);
-    margin-bottom: 0.2em;
-  }
+    #label {
+      font-weight: 500;
+      margin-bottom: 0.2em;
+    }
 
-  #clock {
-    font-size: 8vw;
-    text-shadow: 0 0 25px var(--counter-color);
-    text-align: center;
-    transition: font-size 0.3s ease, text-shadow 0.3s ease;
-  }
+    #clock {
+      font-size: 8vw;
+      text-shadow: 0 0 25px var(--counter-color);
+      transition: font-size 0.3s ease, text-shadow 0.3s ease;
+    }
 
-  #settingsBtn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 2rem;
-    cursor: pointer;
-    user-select: none;
-  }
+    #settingsBtn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
 
-  #settingsPanel {
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid #aaa;
-    backdrop-filter: blur(15px);
-    padding: 15px;
-    border-radius: 10px;
-    display: none;
-    z-index: 99;
-    width: 280px;
-    text-align: left;
-  }
+    #settingsPanel {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #aaa;
+      backdrop-filter: blur(15px);
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      z-index: 99;
+      width: 280px;
+      text-align: left;
+    }
 
-  .setting-group {
-    margin-bottom: 12px;
-  }
+    .setting-group {
+      margin-bottom: 12px;
+    }
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-  }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
 
-  input[type="color"],
-  input[type="datetime-local"],
-  input[type="text"],
-  input[type="range"] {
-    width: 100%;
-    padding: 5px;
-    font-size: 0.9rem;
-    box-sizing: border-box;
-  }
+    input[type="color"],
+    input[type="datetime-local"],
+    input[type="text"],
+    input[type="range"] {
+      width: 100%;
+      padding: 5px;
+      font-size: 0.9rem;
+      box-sizing: border-box;
+    }
 
-  input[type="checkbox"] {
-    transform: scale(1.3);
-    margin-right: 6px;
-  }
+    input[type="checkbox"] {
+      transform: scale(1.3);
+      margin-right: 6px;
+    }
 
-  /* Light mode overrides */
-  body.light-mode {
-    --bg-color: #f2f2f2;
-    --text-color: #111;
-    --counter-color: #005500;
-  }
+    body.light-mode {
+      --bg-color: #f2f2f2;
+      --text-color: #111;
+      --counter-color: #005500;
+    }
 
-  body.light-mode #app {
-    background: rgba(255 255 255 / 0.7);
-  }
+    body.light-mode #app {
+      background: rgba(255 255 255 / 0.7);
+    }
 
-  body.light-mode #settingsPanel {
-    background: rgba(255 255 255 / 0.95);
-    border-color: #444;
-    color: #111;
-  }
-</style>
+    body.light-mode #settingsPanel {
+      background: rgba(255 255 255 / 0.95);
+      border-color: #444;
+      color: #111;
+    }
+  </style>
 </head>
 <body>
 
@@ -127,7 +124,6 @@
       <label for="targetTime">Set Target Time:</label>
       <input type="datetime-local" id="targetTime" />
     </div>
-
 
     <div class="setting-group">
       <label for="customHeading">Custom Heading:</label>
@@ -145,6 +141,11 @@
     </div>
 
     <div class="setting-group">
+      <label for="labelColor">Heading Color:</label>
+      <input type="color" id="labelColor" />
+    </div>
+
+    <div class="setting-group">
       <label for="clockColor">Clock Shadow Color:</label>
       <input type="color" id="clockColor" />
     </div>
@@ -156,7 +157,12 @@
 
     <div class="setting-group">
       <label for="clockSize">Clock Size (vw):</label>
-      <input type="range" id="clockSize" min="5" max="20" value="8" />
+      <input type="range" id="clockSize" min="5" max="25" value="8" />
+    </div>
+
+    <div class="setting-group">
+      <label for="headingSize">Heading Size (vw):</label>
+      <input type="range" id="headingSize" min="1" max="20" value="2" />
     </div>
 
     <div class="setting-group">
@@ -177,9 +183,11 @@
   const customHeadingInput = document.getElementById('customHeading');
   const bgColor = document.getElementById('bgColor');
   const textColor = document.getElementById('textColor');
+  const labelColor = document.getElementById('labelColor');
   const clockColor = document.getElementById('clockColor');
   const fontFamily = document.getElementById('fontFamily');
   const clockSize = document.getElementById('clockSize');
+  const headingSize = document.getElementById('headingSize');
   const darkModeToggle = document.getElementById('darkModeToggle');
 
   let fontLinkTag = null;
@@ -210,7 +218,6 @@
     document.documentElement.style.setProperty('--font-family', `'${font.trim()}', sans-serif`);
   }
 
-  // Format date as "13 May 2025"
   function formatDate(dateStr) {
     if (!dateStr) return '';
     const d = new Date(dateStr);
@@ -229,9 +236,11 @@
       customHeading: customHeadingInput.value,
       bgColor: bgColor.value,
       textColor: textColor.value,
+      labelColor: labelColor.value,
       clockColor: clockColor.value,
       fontFamily: fontFamily.value,
       clockSize: clockSize.value,
+      headingSize: headingSize.value,
       darkMode: darkModeToggle.checked
     }));
   }
@@ -244,9 +253,11 @@
     customHeadingInput.value = prefs.customHeading || '';
     bgColor.value = prefs.bgColor || '#111111';
     textColor.value = prefs.textColor || '#00ffcc';
+    labelColor.value = prefs.labelColor || '#00ffcc';
     clockColor.value = prefs.clockColor || '#00ff99';
     fontFamily.value = prefs.fontFamily || '';
     clockSize.value = prefs.clockSize || 8;
+    headingSize.value = prefs.headingSize || 2;
     darkModeToggle.checked = prefs.darkMode || false;
 
     applyPrefs();
@@ -257,7 +268,8 @@
     document.body.style.color = textColor.value;
     clock.style.textShadow = `0 0 25px ${clockColor.value}`;
     clock.style.fontSize = `${clockSize.value}vw`;
-    label.style.fontSize = `${(clockSize.value * 0.25)}vw`;
+    label.style.fontSize = `${headingSize.value}vw`;
+    label.style.color = labelColor.value;
 
     if (darkModeToggle.checked) {
       document.body.classList.add('dark-mode');
@@ -269,7 +281,6 @@
 
     loadFont(fontFamily.value);
 
-    // Update label text with custom heading or fallback
     if (customHeadingInput.value.trim().length > 0) {
       label.textContent = customHeadingInput.value.trim();
     } else {
@@ -311,7 +322,6 @@
         `${String(minutes).padStart(2, '0')}m ` +
         `${String(seconds).padStart(2, '0')}s`;
 
-      // Update label live as well
       if (customHeadingInput.value.trim().length > 0) {
         label.textContent = customHeadingInput.value.trim();
       } else {
@@ -328,9 +338,11 @@
     customHeadingInput,
     bgColor,
     textColor,
+    labelColor,
     clockColor,
     fontFamily,
     clockSize,
+    headingSize,
     darkModeToggle
   ].forEach(el => el.addEventListener('input', () => {
     applyPrefs();
