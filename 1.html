@@ -61,15 +61,20 @@
       position: absolute;
       top: 60px;
       right: 20px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid #aaa;
       backdrop-filter: blur(15px);
       padding: 15px;
       border-radius: 10px;
-      display: none;
       z-index: 99;
       width: 280px;
+      max-height: 50vh;
+      overflow-y: auto;
       text-align: left;
+      display: none;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
     }
 
     .setting-group {
@@ -95,6 +100,24 @@
     input[type="checkbox"] {
       transform: scale(1.3);
       margin-right: 6px;
+    }
+
+    .save-btn {
+      margin-top: 10px;
+      background: rgba(0, 255, 204, 0.1);
+      border: 1px solid rgba(0, 255, 204, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 1rem;
+      color: var(--text-color);
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .save-btn:hover {
+      background: rgba(0, 255, 204, 0.25);
     }
 
     body.light-mode {
@@ -168,6 +191,8 @@
     <div class="setting-group">
       <label><input type="checkbox" id="darkModeToggle" /> Dark Mode</label>
     </div>
+
+    
   </div>
 
   <div id="label">Countdown to the date</div>
@@ -224,7 +249,7 @@
     if (isNaN(d)) return '';
     const day = d.getDate();
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = monthNames[d.getMonth()];
     const year = d.getFullYear();
     return `${day} ${month} ${year}`;
