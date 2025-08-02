@@ -10,7 +10,7 @@
       --counter-color: #00ff99;
       --bg-color: #111;
       --glass-blur: blur(15px);
-      --font-family: 'Orbitron', sans-serif;
+      --font-family: 'Pacifico', sans-serif;
     }
 
     html, body {
@@ -71,8 +71,9 @@
       max-height: 50vh;
       overflow-y: auto;
       text-align: left;
+      display: none;
       box-sizing: border-box;
-      display: none; /* fixed here - removed display:flex */
+      display: flex;
       flex-direction: column;
     }
 
@@ -174,16 +175,16 @@
 
     <div class="setting-group">
       <label for="fontFamily">Font Family (Google Fonts):</label>
-      <input type="text" id="fontFamily" placeholder="e.g. Orbitron" />
+      <input type="text" id="fontFamily" placeholder="e.g. Pacifico" />
     </div>
 
     <div class="setting-group">
-      <label for="clockSize">Clock Size:</label>
+      <label for="clockSize">Clock Size</label>
       <input type="range" id="clockSize" min="5" max="25" value="8" />
     </div>
 
     <div class="setting-group">
-      <label for="headingSize">Heading Size:</label>
+      <label for="headingSize">Heading Size </label>
       <input type="range" id="headingSize" min="1" max="20" value="2" />
     </div>
 
@@ -226,7 +227,7 @@
         fontLinkTag.remove();
         fontLinkTag = null;
       }
-      document.documentElement.style.setProperty('--font-family', `'Orbitron', sans-serif`);
+      document.documentElement.style.setProperty('--font-family', `'Pacifico', sans-serif`);
       return;
     }
     const formattedFont = font.trim().replace(/ /g, '+');
