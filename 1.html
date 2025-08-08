@@ -72,7 +72,7 @@
       overflow-y: auto;
       text-align: left;
       box-sizing: border-box;
-      display: none; /* fixed here - removed display:flex */
+      display: none;
       flex-direction: column;
     }
 
@@ -174,7 +174,7 @@
 
     <div class="setting-group">
       <label for="fontFamily">Font Family:</label>
-      <input type="text" id="fontFamily" placeholder="e.g. Pacifico" />
+      <input type="text" id="fontFamily" placeholder="e.g. roboto / noto sans / pacifico" />
     </div>
 
     <div class="setting-group">
@@ -190,8 +190,6 @@
     <div class="setting-group">
       <label><input type="checkbox" id="darkModeToggle" /> Dark Mode</label>
     </div>
-
-    
   </div>
 
   <div id="label">Countdown to the date</div>
@@ -220,8 +218,18 @@
     settingsPanel.style.display = (settingsPanel.style.display === 'block') ? 'none' : 'block';
   };
 
-  function loadFont(font) {
-    if (!font) {
+   
+  function formatFontName(name) {
+    return name
+      .trim()
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  function loadFont(rawFont) {
+    if (!rawFont) {
       if (fontLinkTag) {
         fontLinkTag.remove();
         fontLinkTag = null;
@@ -229,8 +237,10 @@
       document.documentElement.style.setProperty('--font-family', `'Pacifico', sans-serif`);
       return;
     }
-    const formattedFont = font.trim().replace(/ /g, '+');
-    const url = `https://fonts.googleapis.com/css2?family=${formattedFont}&display=swap`;
+
+    const formatted = formatFontName(rawFont);         
+    const urlFont = formatted.replace(/ /g, '+');     
+    const url = `https://fonts.googleapis.com/css2?family=${urlFont}&display=swap`;
 
     if (fontLinkTag) fontLinkTag.remove();
 
@@ -239,7 +249,7 @@
     fontLinkTag.href = url;
     document.head.appendChild(fontLinkTag);
 
-    document.documentElement.style.setProperty('--font-family', `'${font.trim()}', sans-serif`);
+    document.documentElement.style.setProperty('--font-family', `'${formatted}', sans-serif`);
   }
 
   function formatDate(dateStr) {
