@@ -55,37 +55,64 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
-      max-width: 800px;
+      gap: 1.8rem;
+      max-width: 900px;
       margin: 0 auto;
     }
 
     .btn {
       flex: 1;
-      min-width: 240px;
-      max-width: 320px;
-      padding: clamp(1rem, 4vw, 1.5rem) clamp(1.5rem, 6vw, 2.5rem);
-      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      min-width: 260px;
+      max-width: 380px;
+      padding: clamp(1.2rem, 5vw, 1.8rem) clamp(2rem, 7vw, 3.5rem);
+      font-size: clamp(1.3rem, 4.5vw, 2.2rem);
       font-weight: bold;
       color: white;
       text-decoration: none;
-      border-radius: 20px;
+      border-radius: 25px;
       background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 40px 0 rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.3);
-      transition: background 0.3s ease, transform 0.3s ease;
+      transition: all 0.4s ease;
       user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+      z-index: -1;
     }
 
     .btn:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.25);
       transform: scale(1.05);
+      box-shadow: 0 12px 45px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .btn:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
     .btn:active {
-      transform: scale(0.95);
+      transform: scale(0.98);
     }
 
     .faq-wrapper {
@@ -193,6 +220,7 @@
       pointer-events: none;
     }
 
+    /* Mobile-specific fixes */
     @media (max-width: 768px) {
       .main-content {
         padding: 1rem;
@@ -205,22 +233,29 @@
       .buttons-container {
         flex-direction: column;
         align-items: center;
-        gap: 0.8rem;
+        gap: 1.5rem;
+        width: 100%;
+        padding: 0 5px;
       }
       
       .btn {
-        min-width: 100%;
+        width: 100%;
         max-width: 100%;
-        padding: 1.2rem 1.5rem;
-        font-size: 1.3rem;
+        min-width: unset;
+        padding: 1.6rem 1rem;
+        font-size: 1.8rem;
+        margin: 0;
+        box-sizing: border-box;
       }
       
       h1 {
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        padding: 0 10px;
       }
       
       h5 {
-        margin-bottom: 1.8rem;
+        margin-bottom: 2.2rem;
+        padding: 0 10px;
       }
       
       .faq-wrapper {
@@ -230,8 +265,9 @@
 
     @media (max-width: 480px) {
       .btn {
-        padding: 1rem;
-        font-size: 1.2rem;
+        padding: 1.5rem 0.8rem;
+        font-size: 1.6rem;
+        border-radius: 22px;
       }
       
       .footer-bar {
@@ -242,12 +278,17 @@
       }
       
       h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
       
       h5 {
-        font-size: 0.9rem;
-        max-width: 90%;
+        font-size: 1rem;
+        max-width: 95%;
+      }
+      
+      .buttons-container {
+        padding: 0;
+        gap: 1.2rem;
       }
     }
 
@@ -260,6 +301,8 @@
       font-size: 0.9rem;
       animation: bounce 2s infinite;
       display: none;
+      text-align: center;
+      width: 100%;
     }
 
     @keyframes bounce {
