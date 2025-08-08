@@ -11,6 +11,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
+      overflow-x: hidden;
     }
 
     body {
@@ -20,7 +21,7 @@
     }
 
     .main-content {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -31,26 +32,40 @@
 
     .container {
       max-width: 90vw;
+      width: 100%;
+      padding: 0 15px;
     }
 
     h1 {
       font-size: clamp(1.8rem, 6vw, 3.5rem);
       margin-bottom: 1.5rem;
       text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      line-height: 1.2;
     }
 
     h5 {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       max-width: 500px;
       margin: 0 auto 2.5rem;
       opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .btn {
-      display: inline-block;
-      margin: 1rem;
-      padding: clamp(1.2rem, 5vw, 2.5rem) clamp(2.5rem, 7vw, 5rem);
-      font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+      flex: 1;
+      min-width: 240px;
+      max-width: 320px;
+      padding: clamp(1rem, 4vw, 1.5rem) clamp(1.5rem, 6vw, 2.5rem);
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
       font-weight: bold;
       color: white;
       text-decoration: none;
@@ -62,7 +77,6 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       transition: background 0.3s ease, transform 0.3s ease;
       user-select: none;
-      min-width: 160px;
     }
 
     .btn:hover {
@@ -80,12 +94,15 @@
       flex-direction: column;
       align-items: center;
       box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
     }
 
     .faq-wrapper h2 {
       text-align: center;
       margin-bottom: 1.5rem;
-      font-size: 1.6rem;
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
     }
 
     .faq-container {
@@ -103,7 +120,7 @@
       width: 100%;
       background: rgba(255, 255, 255, 0.06);
       color: #ffffff;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       text-align: left;
       padding: 12px 15px;
       border: none;
@@ -111,6 +128,19 @@
       cursor: pointer;
       transition: background 0.3s;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-question::before {
+      content: "▶";
+      margin-right: 10px;
+      font-size: 0.8em;
+      transition: transform 0.3s;
+    }
+
+    .faq-container.open .faq-question::before {
+      transform: rotate(90deg);
     }
 
     .faq-question:hover {
@@ -119,15 +149,30 @@
 
     .faq-answer {
       display: none;
-      color: #ccc;
-      font-size: 0.9rem;
+      color: #e0e0e0;
+      font-size: clamp(0.85rem, 3vw, 0.9rem);
       margin-top: 10px;
-      padding: 10px 12px 5px;
-      line-height: 1.5;
+      padding: 10px 12px 15px;
+      line-height: 1.6;
     }
 
     .faq-container.open .faq-answer {
       display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .faq-answer a {
+      color: #aaccff;
+      text-decoration: none;
+    }
+
+    .faq-answer a:hover {
+      text-decoration: underline;
     }
 
     .footer-bar {
@@ -136,10 +181,11 @@
       align-items: center;
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.6);
-      padding: 10px 1rem;
+      padding: 15px 1rem;
       user-select: none;
       width: 100%;
       box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.15);
     }
 
     .footer-left,
@@ -147,74 +193,84 @@
       pointer-events: none;
     }
 
-    @media (max-width: 500px) {
-      body {
-        min-height: 100vh;
-        padding: 0 1rem;
-      }
-
+    @media (max-width: 768px) {
       .main-content {
-        height: auto;
-        padding: 2rem 0;
-      }
-
-      .container {
-        max-width: 100%;
-        width: 100%;
-        padding: 0 1rem;
-      }
-
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      h5 {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-        line-height: 1.3;
-      }
-
-      .btn {
-        display: block;
-        width: 100%;
-        max-width: 320px;
-        margin: 0.75rem auto;
-        padding: 1.8rem 0;
-        font-size: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(255 255 255 / 0.12);
-      }
-
-      .faq-wrapper {
         padding: 1rem;
       }
-
-      .faq-wrapper h2 {
-        font-size: 1.4rem;
+      
+      .container {
+        max-width: 95vw;
+      }
+      
+      .buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      
+      .btn {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 1.2rem 1.5rem;
+        font-size: 1.3rem;
+      }
+      
+      h1 {
         margin-bottom: 1rem;
       }
-
-      .faq-container {
-        max-width: 100%;
-        padding: 8px;
+      
+      h5 {
+        margin-bottom: 1.8rem;
       }
-
-      .faq-question {
-        font-size: 1.1rem;
-        padding: 14px 16px;
+      
+      .faq-wrapper {
+        padding: 1.5rem 0.5rem;
       }
+    }
 
-      .faq-answer {
-        font-size: 0.95rem;
-        padding: 8px 12px 5px;
-        line-height: 1.4;
+    @media (max-width: 480px) {
+      .btn {
+        padding: 1rem;
+        font-size: 1.2rem;
       }
-
+      
       .footer-bar {
         flex-direction: column;
-        gap: 6px;
-        font-size: 0.85rem;
-        padding: 12px 1rem;
+        gap: 5px;
+        text-align: center;
+        padding: 10px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h5 {
+        font-size: 0.9rem;
+        max-width: 90%;
+      }
+    }
+
+    .mobile-scroll-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      animation: bounce 2s infinite;
+      display: none;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+      40% {transform: translateY(-15px) translateX(-50%);}
+      60% {transform: translateY(-7px) translateX(-50%);}
+    }
+
+    @media (max-width: 768px) {
+      .mobile-scroll-hint {
+        display: block;
       }
     }
   </style>
@@ -228,31 +284,34 @@
   <div class="main-content">
     <div class="container">
       <h1>Time Passed & Time Left Calculator</h1>
-      <h5>See how much time has gone by and how much you’ve still got — whether it’s for a goal, an event, or just for keeping track.</h5>
-      <a href="2.html" class="btn">Time Passed</a>
-      <a href="1.html" class="btn">Time Left</a>
+      <h5>See how much time has gone by and how much you've still got — whether it's for a goal, an event, or just for keeping track.</h5>
+      <div class="buttons-container">
+        <a href="2.html" class="btn">Time Passed</a>
+        <a href="1.html" class="btn">Time Left</a>
+      </div>
+      <div class="mobile-scroll-hint">Scroll down for more info</div>
     </div>
   </div>
 
   <div class="faq-wrapper">
-    <h2>FAQ:</h2>
+    <h2>Frequently Asked Questions</h2>
 
     <div class="faq-container">
-      <button class="faq-question">▶ Can I customize the countdown or timer?</button>
+      <button class="faq-question">Can I customize the countdown or timer?</button>
       <div class="faq-answer">
         Yes! You can edit the date, time, font, theme color, and clock size directly inside the Page. It's fully flexible and easy to tweak. Just press the Settings icon in the top right corner of the page. 
       </div>
     </div>
 
     <div class="faq-container">
-      <button class="faq-question">▶  How do I change the font of the timer?</button>
+      <button class="faq-question">How do I change the font of the timer?</button>
       <div class="faq-answer">
         You can just type the name of your desired font (e.g: Roboto / Open Sans / Lobster / Smooch / Nova Mono) in the font family box. The website will automatically apply the font in real-time. You can view your desired font at <a href="https://fontsource.org/" target="_blank" rel="noopener noreferrer">Fontsource</a> or <a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Google Fonts</a>
       </div>
     </div>
 
     <div class="faq-container">
-      <button class="faq-question">▶ The dark mode is glitched or broken. How can I fix it?</button>
+      <button class="faq-question">The dark mode is glitched or broken. How can I fix it?</button>
       <div class="faq-answer">
         You can easily fix it by changing the text color from black to white (or any color other than black) before enabling dark mode. You can do this from the settings menu in the top-right corner.
       </div>
@@ -270,7 +329,13 @@
         button.parentElement.classList.toggle('open');
       });
     });
+    
+    // Prevent FAQ from opening when clicking links inside answers
+    document.querySelectorAll('.faq-answer a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.stopPropagation();
+      });
+    });
   </script>
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94299d22f9744692bd270187198f7041"}'></script>
 </body>
 </html>
