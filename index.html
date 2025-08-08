@@ -8,52 +8,61 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
-      min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      min-height: 100vh;
     }
 
     .main-content {
-      flex: 1;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1rem;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-sizing: border-box;
     }
 
     .container {
-      text-align: center;
       max-width: 90vw;
     }
 
     h1 {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      margin-bottom: 2rem;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    h5 {
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      opacity: 0.85;
     }
 
     .btn {
       display: inline-block;
       margin: 1rem;
-      padding: clamp(0.75rem, 2vw, 1.5rem) clamp(1.5rem, 4vw, 3rem);
-      font-size: clamp(1rem, 3vw, 1.5rem);
+      padding: clamp(1.2rem, 5vw, 2.5rem) clamp(2.5rem, 7vw, 5rem);
+      font-size: clamp(1.4rem, 4.5vw, 2.4rem);
       font-weight: bold;
       color: white;
       text-decoration: none;
-      border-radius: 15px;
+      border-radius: 20px;
       background: rgba(255, 255, 255, 0.15);
       box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       transition: background 0.3s ease, transform 0.3s ease;
       user-select: none;
-      min-width: 120px;
+      min-width: 160px;
     }
 
     .btn:hover {
@@ -66,17 +75,17 @@
     }
 
     .faq-wrapper {
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      padding: 1rem;
       box-sizing: border-box;
     }
 
     .faq-wrapper h2 {
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
     }
 
     .faq-container {
@@ -127,11 +136,10 @@
       align-items: center;
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.6);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 10px;
+      padding: 10px 1rem;
       user-select: none;
-      box-sizing: border-box;
       width: 100%;
+      box-sizing: border-box;
     }
 
     .footer-left,
@@ -139,32 +147,49 @@
       pointer-events: none;
     }
 
-    /* Optional: add responsive spacing */
     @media (max-width: 500px) {
       .footer-bar {
         flex-direction: column;
-        text-align: center;
         gap: 4px;
+        text-align: center;
       }
     }
+
+@media (max-width: 500px) {
+  .btn {
+    font-size: 2rem;
+    padding: 2rem 4rem;
+  }
+}
+@media (max-width: 500px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 320px;
+    font-size: 2rem;
+    padding: 2rem 0;
+    text-align: center;
+  }
+}
+
   </style>
-<!-- Standard Favicon -->
-<link rel="icon" type="image/png" sizes="192x192" href="logo192.png">
 
-<!-- Apple Touch Icon (iOS homescreen) -->
-<link rel="apple-touch-icon" sizes="180x180" href="logo180.png">
-
-<!-- Android/Chrome Shortcut Icon -->
-<link rel="icon" type="image/png" sizes="192x192" href="logo192.png">
-<meta name="theme-color" content="#1e1e2f"> <!-- match your site's dark color -->
-
+  <!-- Icons & Theme -->
+  <link rel="icon" type="image/png" sizes="192x192" href="logo192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="logo180.png">
+  <meta name="theme-color" content="#1e1e2f"> 
 </head>
 <body>
   <div class="main-content">
     <div class="container">
-      <h1>Time Passed & Time Left</h1>
-<h5>See how much time has gone by and how much you’ve still got — whether it’s for a goal, an event, or just for keeping track.</h5>
-
+      <h1>Time Passed & Time Left Calculator</h1>
+      <h5>See how much time has gone by and how much you’ve still got — whether it’s for a goal, an event, or just for keeping track.</h5>
       <a href="2.html" class="btn">Time Passed</a>
       <a href="1.html" class="btn">Time Left</a>
     </div>
@@ -176,7 +201,14 @@
     <div class="faq-container">
       <button class="faq-question">▶ Can I customize the countdown or timer?</button>
       <div class="faq-answer">
-        Yes! You can edit the date, time, font, theme color, and clock size directly inside the Page. It's fully flexible and easy to tweak. Just press the Settings icon in the top right corner of the page.
+        Yes! You can edit the date, time, font, theme color, and clock size directly inside the Page. It's fully flexible and easy to tweak. Just press the Settings icon in the top right corner of the page. 
+      </div>
+    </div>
+
+    <div class="faq-container">
+      <button class="faq-question">▶  How do I change the font of the timer?</button>
+      <div class="faq-answer">
+        You can just type the name of your desired font (e.g: Roboto / Open Sans / Lobster / Smooch / Nova Mono) in the font family box. The website will automatically apply the font in real-time. You can view your desired font at <a href="https://fontsource.org/" target="_blank" rel="noopener noreferrer">Fontsource</a> or <a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Google Fonts</a>
       </div>
     </div>
 
@@ -200,6 +232,6 @@
       });
     });
   </script>
-  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94299d22f9744692bd270187198f7041"}'></script><!-- End Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94299d22f9744692bd270187198f7041"}'></script>
 </body>
 </html>
