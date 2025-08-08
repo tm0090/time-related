@@ -10,7 +10,7 @@
     --counter-color: #00ff99;
     --bg-color: #111;
     --glass-blur: blur(15px);
-    --font-family: 'Orbitron', sans-serif;
+    --font-family: 'Pacifico', sans-serif;
   }
 
   html, body {
@@ -144,8 +144,8 @@
     </div>
 
     <div class="setting-group">
-      <label for="fontFamily">Font Family (Google Fonts):</label>
-      <input type="text" id="fontFamily" placeholder="e.g. Orbitron" />
+      <label for="fontFamily">Font Family:</label>
+      <input type="text" id="fontFamily" placeholder="e.g. pacifico" />
     </div>
 
     <div class="setting-group">
@@ -181,17 +181,28 @@
     settingsPanel.style.display = (settingsPanel.style.display === 'block') ? 'none' : 'block';
   };
 
-  function loadFont(font) {
-    if (!font) {
+  function formatFontName(name) {
+    return name
+      .trim()
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  function loadFont(rawFont) {
+    if (!rawFont) {
       if (fontLinkTag) {
         fontLinkTag.remove();
         fontLinkTag = null;
       }
-      document.documentElement.style.setProperty('--font-family', `'Orbitron', sans-serif`);
+      document.documentElement.style.setProperty('--font-family', `'Pacifico', sans-serif`);
       return;
     }
-    const formattedFont = font.trim().replace(/ /g, '+');
-    const url = `https://fonts.googleapis.com/css2?family=${formattedFont}&display=swap`;
+
+    const formattedFont = formatFontName(rawFont);
+    const fontUrlName = formattedFont.replace(/ /g, '+');
+    const url = `https://fonts.googleapis.com/css2?family=${fontUrlName}&display=swap`;
 
     if (fontLinkTag) fontLinkTag.remove();
 
@@ -200,17 +211,16 @@
     fontLinkTag.href = url;
     document.head.appendChild(fontLinkTag);
 
-    document.documentElement.style.setProperty('--font-family', `'${font.trim()}', sans-serif`);
+    document.documentElement.style.setProperty('--font-family', `'${formattedFont}', sans-serif`);
   }
 
-  // Format date as "13 May 2025"
   function formatDate(dateStr) {
     if (!dateStr) return '';
     const d = new Date(dateStr);
     if (isNaN(d)) return '';
     const day = d.getDate();
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = monthNames[d.getMonth()];
     const year = d.getFullYear();
     return `${day} ${month} ${year}`;
@@ -260,7 +270,6 @@
 
     loadFont(fontFamily.value);
 
-    // Update label text with formatted date
     const formatted = formatDate(startTimeInput.value);
     label.textContent = formatted
       ? `Time passed since ${formatted}`
@@ -297,12 +306,10 @@
         `${String(minutes).padStart(2, '0')}m ` +
         `${String(seconds).padStart(2, '0')}s`;
 
-      // Update label live as well
       const formatted = formatDate(startTimeInput.value);
       label.textContent = formatted
         ? `Time passed since ${formatted}`
         : 'Time passed since the date';
-
     }, 1000);
   }
 
@@ -326,4 +333,3 @@
 
 </body>
 </html>
-
