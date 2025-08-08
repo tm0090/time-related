@@ -3,14 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Countdown Timer</title>
+  <title>Countdown Timer with Gradient BG</title>
   <style>
     :root {
+      /* Original Theme Vars */
       --text-color: #00ffcc;
       --counter-color: #00ff99;
       --bg-color: #111;
       --glass-blur: blur(15px);
       --font-family: 'Pacifico', sans-serif;
+      /* Gradient Theme Vars */
+      --color1: #4facfe;
+      --color2: #00f2fe;
+      --color3: #43e97b;
+      --color4: #38f9d7;
+      --direction: 135deg;
+      --duration: 10s;
     }
 
     html, body {
@@ -20,6 +28,19 @@
       color: var(--text-color);
       transition: background 0.4s, color 0.4s;
       overflow: hidden;
+    }
+    
+    /* NEW: Gradient Animation */
+    body.gradient-active {
+      background: linear-gradient(var(--direction), var(--color1), var(--color2), var(--color3), var(--color4));
+      background-size: 400% 400%;
+      animation: gradient var(--duration) ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     #app {
@@ -68,12 +89,12 @@
       border-radius: 10px;
       z-index: 99;
       width: 280px;
-      max-height: 50vh;
+      /* This makes the panel scrollable if content overflows */
+      max-height: 80vh;
       overflow-y: auto;
       text-align: left;
       box-sizing: border-box;
       display: none;
-      flex-direction: column;
     }
 
     .setting-group {
@@ -94,29 +115,20 @@
       padding: 5px;
       font-size: 0.9rem;
       box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #777;
     }
 
     input[type="checkbox"] {
       transform: scale(1.3);
       margin-right: 6px;
+      vertical-align: middle;
     }
 
-    .save-btn {
-      margin-top: 10px;
-      background: rgba(0, 255, 204, 0.1);
-      border: 1px solid rgba(0, 255, 204, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 1rem;
-      color: var(--text-color);
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.3s;
-    }
-
-    .save-btn:hover {
-      background: rgba(0, 255, 204, 0.25);
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     body.light-mode {
@@ -151,17 +163,51 @@
       <label for="customHeading">Custom Heading:</label>
       <input type="text" id="customHeading" placeholder="Enter your heading here" />
     </div>
-
-    <div class="setting-group">
+    <hr>
+    <div class="setting-group" id="bgColorGroup">
       <label for="bgColor">Background Color:</label>
       <input type="color" id="bgColor" />
     </div>
-
+    
     <div class="setting-group">
-      <label for="textColor">Text Color:</label>
-      <input type="color" id="textColor" />
+      <label><input type="checkbox" id="gradientToggle" /> Use Gradient Background</label>
     </div>
 
+    <div id="gradientSettings" style="display:none;">
+        <div class="setting-group">
+            <label>Color 1:</label>
+            <input type="color" id="gradColor1" value="#4facfe" />
+        </div>
+        <div class="setting-group">
+            <label>Color 2:</label>
+            <input type="color" id="gradColor2" value="#00f2fe" />
+        </div>
+        <div class="setting-group">
+            <label>Color 3:</label>
+            <input type="color" id="gradColor3" value="#43e97b" />
+        </div>
+        <div class="setting-group">
+            <label>Color 4:</label>
+            <input type="color" id="gradColor4" value="#38f9d7" />
+        </div>
+        <div class="setting-group">
+            <label for="gradDirection">Direction (<span id="dirVal">135</span>°):</label>
+            <input type="range" id="gradDirection" min="0" max="360" value="135" />
+        </div>
+        <div class="setting-group">
+            <label for="gradSpeed">Animation Speed (<span id="speedVal">10</span>s):</label>
+            <input type="range" id="gradSpeed" min="2" max="60" value="10" />
+        </div>
+        <div class="setting-group">
+            <label><input type="checkbox" id="gradAnimate" checked /> Animate Gradient</label>
+        </div>
+    </div>
+    <hr>
+    <div class="setting-group">
+      <label for="textColor">Clock Text Color:</label>
+      <input type="color" id="textColor" />
+    </div>
+    
     <div class="setting-group">
       <label for="labelColor">Heading Color:</label>
       <input type="color" id="labelColor" />
@@ -174,7 +220,7 @@
 
     <div class="setting-group">
       <label for="fontFamily">Font Family:</label>
-      <input type="text" id="fontFamily" placeholder="e.g. roboto / noto sans / pacifico" />
+      <input type="text" id="fontFamily" placeholder="e.g. roboto / pacifico" />
     </div>
 
     <div class="setting-group">
@@ -197,6 +243,7 @@
 </div>
 
 <script>
+  // Original Elements
   const clock = document.getElementById('clock');
   const label = document.getElementById('label');
   const settingsBtn = document.getElementById('settingsBtn');
@@ -212,20 +259,30 @@
   const headingSize = document.getElementById('headingSize');
   const darkModeToggle = document.getElementById('darkModeToggle');
 
+  // New Gradient Elements
+  const gradientToggle = document.getElementById('gradientToggle');
+  const gradientSettings = document.getElementById('gradientSettings');
+  const bgColorGroup = document.getElementById('bgColorGroup');
+  const gradColor1 = document.getElementById('gradColor1');
+  const gradColor2 = document.getElementById('gradColor2');
+  const gradColor3 = document.getElementById('gradColor3');
+  const gradColor4 = document.getElementById('gradColor4');
+  const gradDirection = document.getElementById('gradDirection');
+  const gradSpeed = document.getElementById('gradSpeed');
+  const gradAnimate = document.getElementById('gradAnimate');
+  const dirVal = document.getElementById('dirVal');
+  const speedVal = document.getElementById('speedVal');
+
   let fontLinkTag = null;
+  let timer;
 
   settingsBtn.onclick = () => {
-    settingsPanel.style.display = (settingsPanel.style.display === 'block') ? 'none' : 'block';
+    const isBlock = settingsPanel.style.display === 'block';
+    settingsPanel.style.display = isBlock ? 'none' : 'block';
   };
-
-   
+    
   function formatFontName(name) {
-    return name
-      .trim()
-      .toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    return name.trim().toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   }
 
   function loadFont(rawFont) {
@@ -237,18 +294,14 @@
       document.documentElement.style.setProperty('--font-family', `'Pacifico', sans-serif`);
       return;
     }
-
-    const formatted = formatFontName(rawFont);         
-    const urlFont = formatted.replace(/ /g, '+');     
+    const formatted = formatFontName(rawFont);      
+    const urlFont = formatted.replace(/ /g, '+');      
     const url = `https://fonts.googleapis.com/css2?family=${urlFont}&display=swap`;
-
     if (fontLinkTag) fontLinkTag.remove();
-
     fontLinkTag = document.createElement('link');
     fontLinkTag.rel = 'stylesheet';
     fontLinkTag.href = url;
     document.head.appendChild(fontLinkTag);
-
     document.documentElement.style.setProperty('--font-family', `'${formatted}', sans-serif`);
   }
 
@@ -257,15 +310,15 @@
     const d = new Date(dateStr);
     if (isNaN(d)) return '';
     const day = d.getDate();
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = monthNames[d.getMonth()];
     const year = d.getFullYear();
     return `${day} ${month} ${year}`;
   }
 
   function savePrefs() {
-    localStorage.setItem('countdownPrefs', JSON.stringify({
+    localStorage.setItem('countdownPrefsV2', JSON.stringify({ // Updated storage key
+      // Original prefs
       targetTime: targetTimeInput.value,
       customHeading: customHeadingInput.value,
       bgColor: bgColor.value,
@@ -275,12 +328,21 @@
       fontFamily: fontFamily.value,
       clockSize: clockSize.value,
       headingSize: headingSize.value,
-      darkMode: darkModeToggle.checked
+      darkMode: darkModeToggle.checked,
+      // New gradient prefs
+      gradientEnabled: gradientToggle.checked,
+      gradColor1: gradColor1.value,
+      gradColor2: gradColor2.value,
+      gradColor3: gradColor3.value,
+      gradColor4: gradColor4.value,
+      gradDirection: gradDirection.value,
+      gradSpeed: gradSpeed.value,
+      gradAnimate: gradAnimate.checked,
     }));
   }
 
   function loadPrefs() {
-    const prefs = JSON.parse(localStorage.getItem('countdownPrefs'));
+    const prefs = JSON.parse(localStorage.getItem('countdownPrefsV2')); // Updated storage key
     if (!prefs) return;
 
     targetTimeInput.value = prefs.targetTime || '';
@@ -292,15 +354,51 @@
     fontFamily.value = prefs.fontFamily || '';
     clockSize.value = prefs.clockSize || 8;
     headingSize.value = prefs.headingSize || 2;
-    darkModeToggle.checked = prefs.darkMode || false;
+    darkModeToggle.checked = typeof prefs.darkMode === 'boolean' ? prefs.darkMode : false;
+    
+    // Load new gradient prefs
+    gradientToggle.checked = typeof prefs.gradientEnabled === 'boolean' ? prefs.gradientEnabled : false;
+    gradColor1.value = prefs.gradColor1 || '#4facfe';
+    gradColor2.value = prefs.gradColor2 || '#00f2fe';
+    gradColor3.value = prefs.gradColor3 || '#43e97b';
+    gradColor4.value = prefs.gradColor4 || '#38f9d7';
+    gradDirection.value = prefs.gradDirection || 135;
+    gradSpeed.value = prefs.gradSpeed || 10;
+    gradAnimate.checked = typeof prefs.gradAnimate === 'boolean' ? prefs.gradAnimate : true;
 
     applyPrefs();
   }
 
   function applyPrefs() {
-    document.body.style.background = bgColor.value;
-    document.body.style.color = textColor.value;
-    clock.style.textShadow = `0 0 25px ${clockColor.value}`;
+    // Handle background: gradient or solid
+    if (gradientToggle.checked) {
+        document.body.classList.add('gradient-active');
+        document.body.style.background = ''; // Clear inline style
+        gradientSettings.style.display = 'block';
+        bgColorGroup.style.display = 'none';
+        
+        document.documentElement.style.setProperty('--color1', gradColor1.value);
+        document.documentElement.style.setProperty('--color2', gradColor2.value);
+        document.documentElement.style.setProperty('--color3', gradColor3.value);
+        document.documentElement.style.setProperty('--color4', gradColor4.value);
+        document.documentElement.style.setProperty('--direction', `${gradDirection.value}deg`);
+        document.documentElement.style.setProperty('--duration', `${gradSpeed.value}s`);
+        
+        dirVal.textContent = gradDirection.value;
+        speedVal.textContent = gradSpeed.value;
+        
+        document.body.style.animationName = gradAnimate.checked ? 'gradient' : 'none';
+    } else {
+        document.body.classList.remove('gradient-active');
+        document.body.style.animationName = 'none';
+        document.body.style.background = bgColor.value;
+        gradientSettings.style.display = 'none';
+        bgColorGroup.style.display = 'block';
+    }
+      
+    document.documentElement.style.setProperty('--text-color', textColor.value);
+    document.documentElement.style.setProperty('--counter-color', clockColor.value);
+    
     clock.style.fontSize = `${clockSize.value}vw`;
     label.style.fontSize = `${headingSize.value}vw`;
     label.style.color = labelColor.value;
@@ -309,8 +407,8 @@
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
     } else {
-      document.body.classList.add('light-mode');
       document.body.classList.remove('dark-mode');
+      document.body.classList.add('light-mode');
     }
 
     loadFont(fontFamily.value);
@@ -319,17 +417,13 @@
       label.textContent = customHeadingInput.value.trim();
     } else {
       const formatted = formatDate(targetTimeInput.value);
-      label.textContent = formatted
-        ? `Countdown to ${formatted}`
-        : 'Countdown to the date';
+      label.textContent = formatted ? `Countdown to ${formatted}` : 'Countdown to the date';
     }
   }
 
-  let timer;
   function startCounter() {
     if (!targetTimeInput.value) {
       clock.textContent = '00d 00h 00m 00s';
-      label.textContent = 'Countdown to the date';
       return;
     }
     if (timer) clearInterval(timer);
@@ -339,7 +433,11 @@
       let diff = Math.floor((target - now) / 1000);
       if (diff <= 0) {
         clock.textContent = "00d 00h 00m 00s";
-        label.textContent = customHeadingInput.value.trim() || 'Countdown complete!';
+        if (customHeadingInput.value.trim()) {
+            label.textContent = customHeadingInput.value.trim();
+        } else {
+            label.textContent = 'Countdown complete!';
+        }
         clearInterval(timer);
         return;
       }
@@ -356,36 +454,35 @@
         `${String(minutes).padStart(2, '0')}m ` +
         `${String(seconds).padStart(2, '0')}s`;
 
-      if (customHeadingInput.value.trim().length > 0) {
-        label.textContent = customHeadingInput.value.trim();
-      } else {
-        const formatted = formatDate(targetTimeInput.value);
-        label.textContent = formatted
-          ? `Countdown to ${formatted}`
-          : 'Countdown to the date';
-      }
     }, 1000);
+    applyPrefs(); // Re-apply prefs to update heading text immediately
+  }
+  
+  // Master list of all settings inputs
+  const allSettingsInputs = [
+    customHeadingInput, bgColor, textColor, labelColor, clockColor,
+    fontFamily, clockSize, headingSize, darkModeToggle,
+    // Add gradient controls to the list
+    gradientToggle, gradColor1, gradColor2, gradColor3, gradColor4,
+    gradDirection, gradSpeed, gradAnimate
+  ];
+
+  function handleSettingsChange() {
+      applyPrefs();
+      savePrefs();
   }
 
-  [
-    targetTimeInput,
-    customHeadingInput,
-    bgColor,
-    textColor,
-    labelColor,
-    clockColor,
-    fontFamily,
-    clockSize,
-    headingSize,
-    darkModeToggle
-  ].forEach(el => el.addEventListener('input', () => {
-    applyPrefs();
-    savePrefs();
-    if (el === targetTimeInput || el === customHeadingInput) startCounter();
-  }));
+  allSettingsInputs.forEach(el => el.addEventListener('input', handleSettingsChange));
+  
+  // Target time has special handling to restart the counter
+  targetTimeInput.addEventListener('input', () => {
+    handleSettingsChange();
+    startCounter();
+  });
 
+  // Initial load
   loadPrefs();
-  if (targetTimeInput.value) startCounter();
+  startCounter();
 </script>
 
 </body>
